@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include<ctype.h>
 #include<stdlib.h>
+#include <math.h>
 
 
 /***
@@ -124,27 +125,52 @@ int readAndParse( FILE * pInfile, char * pLine, char ** pLabel, char
        {
        
             *pLabel = lPtr;
-            if( !( lPtr = strtok( NULL, "\t\n ," ) ) ) return( OK );
+            if( !( lPtr = strtok( NULL, "\t\n ,()" ) ) ) return( OK );
        }
        
            *pOpcode = lPtr;
 
-       if( !( lPtr = strtok( NULL, "\t\n ," ) ) ) return( OK );
+       if( !( lPtr = strtok( NULL, "\t\n ,()" ) ) ) return( OK );
        
       *pArg1 = lPtr;
        
-      if( !( lPtr = strtok( NULL, "\t\n ," ) ) ) return( OK );
+      if( !( lPtr = strtok( NULL, "\t\n ,()" ) ) ) return( OK );
 
        *pArg2 = lPtr;
-       if( !( lPtr = strtok( NULL, "\t\n ," ) ) ) return( OK );
+       if( !( lPtr = strtok( NULL, "\t\n ,()" ) ) ) return( OK );
 
        *pArg3 = lPtr;
 
-       if( !( lPtr = strtok( NULL, "\t\n ," ) ) ) return( OK );
+       if( !( lPtr = strtok( NULL, "\t\n ,()" ) ) ) return( OK );
 
        *pArg4 = lPtr;
 
        return( OK );
+    }
+
+    /********************************************************************************************/
+    // funct7 function
+    void funct7(char* lptr)
+    {
+      if(strcmp(lptr,"add")==0 || strcmp(lptr,"xor")==0 || strcmp(lptr,"or")==0 || strcmp(lptr,"and")==0 || strcmp(lptr,"sll")==0 || strcmp(lptr,"srl")==0 || 
+      strcmp(lptr,"slt")==0 || strcmp(lptr,"sltu"))
+      {
+        int arr[7]={0};
+        for(int i=31; i>=25; i--)
+        {
+          bin_instruction[i]=arr[31-i];
+        }
+      }
+      if(strcmp(lptr,"sub")==0 || strcmp(lptr,"sra")==0 )
+      {
+        int arr[7]={0,0,1,0,1,0,0};
+        for(int i=31; i>=25; i--)
+        {
+          bin_instruction[i]=arr[31-i];
+        }
+      }
+  
+
     }
 /************************************************************************************************/
 // funt3 fnction
@@ -154,54 +180,54 @@ void funct3(char *lptr)
   strcmp(lptr,"jalr")==0 || strcmp(lptr,"ecall")==0 || strcmp(lptr,"ebreak")==0)
   {
     int arr[3]={0,0,0};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
 /**********************************************************************/
  else if(strcmp(lptr,"sll")==0 || strcmp(lptr,"slli")==0 || strcmp(lptr,"lh")==0 || strcmp(lptr,"sh")==0 || strcmp(lptr,"bne")==0)
   {
     int arr[3]={0,0,1};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /***********************************************************************/
   else if(strcmp(lptr,"slt")==0 || strcmp(lptr,"slti")==0 || strcmp(lptr,"lw")==0 || strcmp(lptr,"sw")==0)
   {
     int arr[3]={0,1,0};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /*******************************************************************************/
   else if(strcmp(lptr,"sltu")==0 || strcmp(lptr,"sltiu")==0)
   {
     int arr[3]={0,1,1};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /*********************************************************************************/
   else if(strcmp(lptr,"xor")==0 || strcmp(lptr,"xori")==0 || strcmp(lptr,"lbu")==0 || strcmp(lptr,"blt")==0)
   {
     int arr[3]={1,0,0};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /*****************************************************************************************/
   else if(strcmp(lptr,"srl")==0 || strcmp(lptr,"sra")==0 || strcmp(lptr,"srli")==0 || strcmp(lptr,"sari")==0 || strcmp(lptr,"lhu")==0 || strcmp(lptr,"bge")==0)
   {
     int arr[3]={1,0,1};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /*******************************************************************************************/
@@ -209,9 +235,9 @@ void funct3(char *lptr)
   else if(strcmp(lptr,"or")==0 || strcmp(lptr,"ori")==0 || strcmp(lptr,"bltu")==0)
   {
     int arr[3]={1,1,0};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
   /***********************************************************************************************/
@@ -219,14 +245,14 @@ void funct3(char *lptr)
   else if(strcmp(lptr,"and")==0 || strcmp(lptr,"andi")==0 || strcmp(lptr,"bgeu")==0)
   {
     int arr[3]={1,1,1};
-    for(int i=19; i>=17; i--)
+    for(int i=14; i>=12; i--)
     {
-      bin_instruction[i]=arr[i-17];
+      bin_instruction[i]=arr[14-i];
     }
   }
 }
+/********************************************************************************************************/
 
-/*************************************************************************************************************/
 
 
 
@@ -356,7 +382,7 @@ void funct3(char *lptr)
 
     else if((strcmp(lArg1,"x12")==0) || (strcmp(lArg1,"a2")==0))
       {
-          int arr[5]={0,1,0,1,0};
+          int arr[5]={0,1,1,0,0};
           for(int i=0; i<5; i++) 
             {
                binary[i]=arr[i];
@@ -365,7 +391,7 @@ void funct3(char *lptr)
       }     
     else if((strcmp(lArg1,"x13")==0) || (strcmp(lArg1,"a3")==0))
       {
-          int arr[5]={0,1,0,1,0};
+          int arr[5]={0,1,1,0,1};
           for(int i=0; i<5; i++) 
             {
                binary[i]=arr[i];
@@ -540,10 +566,10 @@ int isOpcode(char *lptr)
             
             
         {
-          int arr1[32]={1,1,0,0,1,1,0}; // opcode for R type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={0,1,1,0,0,1,1}; // opcode for R type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
             
             
@@ -563,11 +589,12 @@ int isOpcode(char *lptr)
             
             
         {
-          int arr1[32]={0,0,1,0,0,1,1}; // opcode for I type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={0,0,1,0,0,1,1}; // opcode for I type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
             
             return 2;  // means I type instruction
         }       
@@ -583,12 +610,14 @@ int isOpcode(char *lptr)
             
             
         {
-          int arr1[32]={0,0,0,0,0,1,1}; // opcode for I type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={0,0,0,0,0,1,1}; // opcode for I type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
-            return 2; // I type instruction
+            
+            
+            return 20; // Load type instruction
         }
               
     /***************************************************************************/
@@ -599,11 +628,13 @@ int isOpcode(char *lptr)
             
             
         {
-          int arr1[32]={0,1,0,0,0,1,1}; // opcode for S type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={0,1,0,0,0,1,1}; // opcode for S type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
+            
             return 3; // S type instructions
         }
                 
@@ -618,11 +649,13 @@ int isOpcode(char *lptr)
             
             
         {
-          int arr1[32]={1,1,0,0,0,1,1}; // opcode for B type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={1,1,0,0,0,1,1}; // opcode for B type instruction
+           for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
+            
              return 4; // B type instruction
         }
 
@@ -631,11 +664,12 @@ int isOpcode(char *lptr)
    else if ((strcmp(lptr,"jal")==0))
             
         {
-          int arr1[32]={1,1,0,1,1,1,1}; // opcode for J type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={1,1,0,1,1,1,1}; // opcode for J type instruction
+           for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
             return 5; // J type
         }        
               
@@ -643,11 +677,13 @@ int isOpcode(char *lptr)
 else if ((strcmp(lptr,"jalr")==0))   
             
         {
-          int arr1[32]={1,1,0,1,1,1,1}; // opcode for I type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={1,1,0,1,1,1,1}; // opcode for I type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
+            
              return 2; // I type
         }        
        
@@ -655,11 +691,13 @@ else if ((strcmp(lptr,"jalr")==0))
  else if ((strcmp(lptr,"lui")==0) || (strcmp(lptr,"aupic")==0))   
             
         {
-          int arr1[32]={0,1,1,0,1,1,1}; // opcode for U type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={0,1,1,0,1,1,1}; // opcode for U type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
+            
               return 6; // U type Instruction
         }
       
@@ -668,14 +706,48 @@ else if ((strcmp(lptr,"jalr")==0))
  else if ((strcmp(lptr,"ecall")==0) || (strcmp(lptr,"ebreak")==0))   
             
         {
-          int arr1[32]={1,1,1,0,0,1,1}; // opcode for R type instruction
-            for(int i=31; i>=0; i--)
+          int arr1[7]={1,1,1,0,0,1,1}; // opcode for R type instruction
+            for(int i=6; i>=0; i--)
             {
-               bin_instruction[i]=arr1[31-i]; // storing the opcode in the instruction array
+               bin_instruction[i]=arr1[6-i]; // storing the opcode in the instruction array
             }
+            
+            
             return 2; // I type
         }
 }
+
+
+              // Function for register rs1
+/*************************************************************************************************************/
+void rs1(char* lArg2)
+{
+  reg(lArg2);                                         
+  for(int i=19; i>=15; i--)
+  {
+    bin_instruction[i]=binary[19-i];
+  }
+
+}
+/***************************************************************************************************************/
+                        // Function for register rs2
+
+void rs2(char* lArg3)
+{
+  reg(lArg3);                                         
+  for(int i=24; i>=20; i--)
+  {
+    bin_instruction[i]=binary[24-i];
+  }
+
+}
+
+/*********************************************************************************************************************/
+
+
+
+
+
         
 /***************************************************************************************/
 int toNum( char * pStr )
@@ -787,9 +859,9 @@ void write()
   FILE* fptr;
     fptr=fopen("file2.txt","a");
   
-    
-    
-        for(int i=0; i<32; i++)
+    fputs("(Enter the HEX Number in format e.g 0xFAB)",fptr);
+     fprintf(fptr,"\n");
+        for(int i=31; i>=0; i--)
         {
             fprintf(fptr,"%d",bin_instruction[i]);
           
@@ -800,17 +872,153 @@ void write()
     fclose(fptr);
 }
 /*******************************************************************************************************/
-      //storing the binary value of rd in instruction array
-void store()
+      //storing the binary value of registers in instruction array
+void rd()
 {
-  for(int i=24; i>=20; i--)
+  
+  
+  for(int i=11; i>=7; i--)
   {
-   bin_instruction[i]=binary[i-20];
+   bin_instruction[i]=binary[11-i];
   }
+  
 }
+/*****************************************************************************/
+          // Twos Complement 
+void Twoscomp(int SIZE, int bin)         // SIZE OF IMMEDIATE
+{
+  int arr[12]={1,1,1,1,1,1,1,1,1,1,1,1};
+  char onesComp[SIZE + 1], twosComp[SIZE + 1];
+   int  carry=1;
+    
+    /* Input 8-bit binary string */
+    
+        char binary[13];
+        sprintf(binary,"%d",bin);
+
+    /* Find ones complement of the binary number */
+    for(int i=0; i<SIZE; i++)
+    {
+        if(binary[i] == '1')
+        {
+            onesComp[i] = '0';
+        }
+        else if(binary[i] == '0')
+        {
+            onesComp[i] = '1';
+        }
+    }
+    onesComp[SIZE] = '\0';
+
+    /*
+     * Add 1 to the ones complement
+     */
+    for(int i=SIZE-1; i>=0; i--)
+    {
+        if(onesComp[i] == '1' && carry == 1)
+        {
+            twosComp[i] = '0';
+        }
+        else if(onesComp[i] == '0' && carry == 1)
+        {
+            twosComp[i] = '1';
+            carry = 0;
+        }
+        else
+        {
+            twosComp[i] = onesComp[i];
+        }
+    }
+    twosComp[SIZE] = '\0';
+    //printf("%s\n",twosComp);
+    int b=strlen(twosComp);
+   for(int i=0; i<b; i++)
+   {
+      int a=twosComp[i]-'0';
+      arr[i]=a;
+   }
+   for(int i=20; i<=31; i++)
+   {
+    bin_instruction[i]=arr[i-20];
+   }
+
+}
+/***************************************************************************************************/
+              // Hex to Decimal 
+
 
 /*****************************************************************************************************************/
+                // immediate for I type[11:0]
+void imm(char* lArg3)
+{
+        if(lArg3[1]=='x')
+        {
+          int  ARRAY_SIZE=32;
+         // char hex[ARRAY_SIZE]=lArg3;
+          int decimal = 0, base = 1;
+          int i = 0, value, length;
+          char deci[20];
+          fflush(stdin);
+          //fgets(hex,ARRAY_SIZE,stdin);
+          length = strlen(lArg3);
+          for(i = length--; i >= 0; i--)
+          {
+               if(lArg3[i] >= '0' && lArg3[i] <= '9')
+             {
+               decimal += (lArg3[i] - 48) * base;
+                 base *= 16;
+             }
+               else if(lArg3[i] >= 'A' && lArg3[i] <= 'F')
+             {
+                 decimal += (lArg3[i] - 55) * base;
+                  base *= 16;
+              }
+            else if(lArg3[i] >= 'a' && lArg3[i] <= 'f')
+            {
+            decimal += (lArg3[i] - 87) * base;
+            base *= 16;
+             }
+         }
+          sprintf(lArg3,"%d",decimal);
+        }
+         int x = atoi(lArg3);
+         if(x>=0)
+         {
+        int value = x ; // assuming a 12 bit int
+        int array[12];
 
+        for (int i=0; i<12; ++i) 
+        {
+            array[i] = ((value >> i) & 1);
+        }
+       for(int j=20; j<=31; j++)
+        {                                       
+                bin_instruction[j]=array[j-20];
+        }
+        }
+        else
+        {
+          x=x*(-1);
+         int  bin = 0;
+          int rem, i = 1;
+
+           while (x!=0) 
+           {
+              rem = x % 2;
+              x/= 2;
+              bin += rem * i;
+              i *= 10;
+           }
+           Twoscomp(12,bin);
+           
+        }
+        
+        
+        
+}
+
+
+/******************************************************************************************************************/
 int main(int argc, char* argv[])
 {  
      /* open the source file */
@@ -852,21 +1060,55 @@ int main(int argc, char* argv[])
   do {
     lRet1 = readAndParse( lInfile, lLine, &lLabel,
       &lOpcode, &lArg1, &lArg2, &lArg3, &lArg4 );
-     
+     if(lRet1!=DONE)
+     {
        n=isOpcode(lOpcode);
-       reg(lArg1);
-       funct3(lOpcode);
-       store();
+       if (n==1)
+       {
+          reg(lArg1);
+          rd();
+          rs1(lArg2);
+          rs2(lArg3);
+          funct3(lOpcode);
+          funct7(lOpcode);
+       }
+       if(n==2)       // I type
+       {
+          reg(lArg1);
+          rd();
+          rs1(lArg2);
+          funct3(lOpcode);
+          imm(lArg3);
+
+       }
+       if(n==20)    // Load instructions
+       {
+          reg(lArg1);
+          rd();
+          rs1(lArg3);
+          funct3(lOpcode);
+          imm(lArg2);
+          
+       }
+       
+       
+       
        write();
-       printf("%s\n",lArg1);
+       
     // printf("%d", isOpcode(lOpcode));
-     
+     }
      } while( lRet1 != DONE );
     
+    
+     printf("%s\n",lOpcode);
+     printf("%s\n",lArg1);
+     printf("%s\n",lArg2);
+     printf("%s",lArg3);
+    
+    
 
-     
-      
-        printf("%d",n);
+  
+        
       
      
    fclose ( infile );     /* Now close files */
